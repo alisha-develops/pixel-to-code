@@ -9,20 +9,22 @@
 <body>
     <h1>convert your art into code!</h1>
 
-    <div id="grid"></div>
-
     <div class="columns">
+        <div class="tools">
+            <span>tools</span>
+        </div>
+            
+        <div class="preview">
+            <span>paint here, this is your live preview:</span>
+            <div id="grid"></div>
+        </div>
+
         <div class="output1">
             <textarea id="output" readonly placeholder="generated CSS will show up here..."></textarea>
             <div class="row">
                 <button id="copycss">copy</button>
                 <span id="copyStatus"></span>
             </div>
-        </div>
-            
-        <div class="preview">
-            <span>live preview:</span>
-            <div id="csspreview"></div>
         </div>
     </div>
         
