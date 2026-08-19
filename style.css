@@ -105,17 +105,24 @@ h1 {
     .preview {
         width: 100%;
         box-sizing: border-box;
-    }
-
-    #csspreview,
-    #output {
-        box-sizing: border-box;
-        width: 100%;
-        margin: 0 0 20px;
-        height: 300px;
+        min-width: 0;
     }
 
     .output1 {
         padding: 15px;
+    }
+
+    #output {
+        width: 100%;
+        box-sizing: border-box;
+        margin: 0 0 20px;
+        height: 300px;
+    }
+
+    #csspreview {
+        width: auto;
+        box-sizing: border-box;
+        margin: 0 10px 20px;
+        height: 300px;
     }
 }
