@@ -12,6 +12,12 @@
     <div class="columns">
         <div class="tools">
             <span>tools</span>
+            <span class="toolbutton">grid size</span>
+            <select id="selectsize">
+                <option value="8">8 x 8</option>
+                <option value="16" selected>16 x 16</option>
+                <option value="32">32 x 32</option>
+            </select>
         </div>
             
         <div class="preview">
@@ -29,5 +35,7 @@
     </div>
         
     <canvas id="export" width="256" height="256"></canvas>
+
+    <script src="index.js"></script>
 </body>
 </html>
