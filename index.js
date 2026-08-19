@@ -14,6 +14,7 @@ function buildGrid(size) {
     gridelement.innerHTML = "";
     gridelement.style.gridTemplateColumns = "repeat(" + gridsize + ", 1fr)";
     gridelement.style.gridTemplateRows = "repeat(" + gridsize + ", 1fr)";
+    gridelement.style.backgroundSize = "calc(100% / " + gridsize + ") calc(100% / " + gridsize + ")";
 
     for (let i = 0; i < gridsize * gridsize; i++) {
         const cell = document.createElement("div");
