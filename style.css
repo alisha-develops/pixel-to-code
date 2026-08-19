@@ -39,21 +39,83 @@ h1 {
 
 .output1 {
     flex: 1;
+    padding: 20px;
+}
+
+#output {
+    box-sizing: border-box;
+    width: 100%;
+    height: 400px;
+    resize: vertical;
+    padding: 15px;
+    border: 3px solid #fca1f9;
+    background-color: #3f0d28;
+    color: #fca1f9;
+    font-family: monospace;
+    font-size: 1rem;
+    line-height: 1.5;
+    outline: none;
+}
+
+#output::placeholder {
+    color: #d87acb;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+#copycss {
+    padding: 8px 18px;
+    border: 2px solid #fca1f9;
+    background-color: #fca1f9;
+    color: #3f0d28;
+    font-family: cursive;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#copycss:hover {
+    background-color: #64123f;
+    color: #fca1f9;
+}
+
+#copyStatus {
+    color: #fca1f9;
+    font-family: cursive;
+}
+
+.output1,
+.preview {
+    box-sizing: border-box;
+    min-width: 0;
 }
 
 @media (max-width: 700px) {
     .columns {
         margin: 0 15px;
         flex-direction: column;
+        gap: 0;
     }
 
     .output1,
     .preview {
         width: 100%;
+        box-sizing: border-box;
     }
 
-    #csspreview {
-        margin: 0 10px 20px;
+    #csspreview,
+    #output {
+        box-sizing: border-box;
+        width: 100%;
+        margin: 0 0 20px;
         height: 300px;
+    }
+
+    .output1 {
+        padding: 15px;
     }
 }
