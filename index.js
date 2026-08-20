@@ -185,7 +185,9 @@ document.getElementById("clear").addEventListener("click", function(){
     copystatus.textContent ="";
 });
 
-function generateCSS() {
+let piececounter = 0;
+
+function generateCSS(classname) {
     const shadowparts = [];
 
     for (let i = 0; i < pixels.length; i++) {
@@ -202,7 +204,7 @@ function generateCSS() {
         return "/* grid is empty, paint something first! */";
     }
 
-    let css = ".pixel-art {\n";
+    let css = "." + classname + " {\n";
     css += "  width: 1px;\n  height: 1px;\n";
     css += "  transform: scale(16);\n";
     css += "  transform-origin: top left;\n";
@@ -214,12 +216,26 @@ function generateCSS() {
     return css;
 }
 
-document.getElementById("generate").addEventListener("click", function(){
-    outputbox.value = generateCSS();
-    copystatus.textContent = "";
+document.getElementById("generate").addEventListener("click", function() {
+    piececounter = piececounter + 1;
+    const classname = "pixel-art-" + piececounter;
 
-    htmlbox.value = "<div class=\"pixel-art\"></div>";
-    testcss.value = css;
+    const css = generateCSS(classname);
+    outputbox.value = css;
+
+    if (htmlbox.value.length > 0) {
+        htmlbox.value = htmlbox.value + "\n" + "<div class=\"" + classname + "\"></div>";
+    }
+    if (htmlbox.value.length === 0) {
+        htmlbox.value = "<div class=\"" + classname + "\"></div>";
+    }
+
+    if (testcss.value.length > 0) {
+        testcss.value = testcss.value + "\n\n" + css;
+    }
+    if (testcss.value.length === 0) {
+        testcss.value = css;
+    }
 
     renderTestPreview();
     copystatus.textContent = "";
@@ -258,3 +274,10 @@ function renderTestPreview() {
 
 htmlbox.addEventListener("input", renderTestPreview);
 testcss.addEventListener("input", renderTestPreview);
+
+document.getElementById("cleartest").addEventListener("click", function() {
+    htmlbox.value = "";
+    testcss.value = "";
+    piececounter = 0;
+    renderTestPreview();
+});
