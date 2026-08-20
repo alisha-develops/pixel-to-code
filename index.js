@@ -12,53 +12,110 @@ let ishuedragging = false;
 
 function hsv2hex(h, s, v) {
     const c = v * s;
-    const x = c * (1 - Math.abs((h/60) % 2 - 1));
+    const x = c * (1 - Math.abs((h / 60) % 2 - 1));
     const m = v - c;
 
     let [r, g, b] =
-    h < 60 ? [c, x, 0] :
-    h < 120 ? [x, c, 0] :
+        h < 60 ? [c, x, 0] :
+        h < 120 ? [x, c, 0] :
         h < 180 ? [0, c, x] :
         h < 240 ? [0, x, c] :
         h < 300 ? [x, 0, c] :
         [c, 0, x];
 
-    return '#' + [r, g, b]
+    return "#" + [r, g, b]
         .map(n => Math.round((n + m) * 255).toString(16).padStart(2, "0"))
-        .join("");map
+        .join("");
 }
 
 function drawhuestrip() {
-    const gradient = huectx.createLinearGradient(0, 0, huecanvas.clientWidth, 0);
+    const gradient = huectx.createLinearGradient(0, 0, huecanvas.width, 0);
 
-    for (let h = 0; h <= 360; h +=60) {
+    for (let h = 0; h <= 360; h += 60) {
         gradient.addColorStop(h / 360, hsv2hex(h, 1, 1));
     }
 
     huectx.fillStyle = gradient;
-    huectx.fillRect(0, 0, huecanvas.clientWidth, huecanvas.height);
+    huectx.fillRect(0, 0, huecanvas.width, huecanvas.height);
 }
 
 function drawsvsquare() {
-    svctx.fillStyle = hsv2hex(currenthue,1, 1);
-    svctx.fillRect(0, 0,  svcanvas.clientWidth, svcanvas.height);
+    svctx.fillStyle = hsv2hex(currenthue, 1, 1);
+    svctx.fillRect(0, 0, svcanvas.width, svcanvas.height);
 
-    const white = svctx.createLinearGradient(0,0, svcanvas.clientWidth, 0);
+    const white = svctx.createLinearGradient(0, 0, svcanvas.width, 0);
     white.addColorStop(0, "#fff");
     white.addColorStop(1, "transparent");
     svctx.fillStyle = white;
-    svctx.fillRect(0,0, svcanvas.clientWidth, svcanvas.height);
+    svctx.fillRect(0, 0, svcanvas.width, svcanvas.height);
 
-    const black = svctx.createLinearGradient(0,0, 0, svcanvas.height);
+    const black = svctx.createLinearGradient(0, 0, 0, svcanvas.height);
     black.addColorStop(0, "transparent");
     black.addColorStop(1, "#000");
     svctx.fillStyle = black;
-    svctx.fillRect(0,0, svcanvas.clientWidth, svcanvas.height);
+    svctx.fillRect(0, 0, svcanvas.width, svcanvas.height);
 }
 
+function updatecolor(hex) {
+    currentcolor = hex;
+    currentcolorbox.style.backgroundColor = hex;
+    hexinput.value = hex;
+}
+
+function pickfromsv(event) {
+    const rect = svcanvas.getBoundingClientRect();
+
+    const x = Math.max(0, Math.min(event.clientX - rect.left, svcanvas.width));
+    const y = Math.max(0, Math.min(event.clientY - rect.top, svcanvas.height));
+
+    updatecolor(hsv2hex(
+        currenthue,
+        x / svcanvas.width,
+        1 - y / svcanvas.height
+    ));
+}
+
+function pickfromhue(event) {
+    const rect = huecanvas.getBoundingClientRect();
+    const x = Math.max(0, Math.min(event.clientX - rect.left, huecanvas.width));
+
+    currenthue = x / huecanvas.width * 360;
+    drawsvsquare();
+    updatecolor(hsv2hex(currenthue, 1, 1));
+}
+
+svcanvas.addEventListener("mousedown", e => {
+    issvdragging = true;
+    pickfromsv(e);
+});
+
+svcanvas.addEventListener("mousemove", e => {
+    if (issvdragging) pickfromsv(e);
+});
+
+huecanvas.addEventListener("mousedown", e => {
+    ishuedragging = true;
+    pickfromhue(e);
+});
+
+huecanvas.addEventListener("mousemove", e => {
+    if (ishuedragging) pickfromhue(e);
+});
+
+document.addEventListener("mouseup", () => {
+    issvdragging = false;
+    ishuedragging = false;
+});
+
+hexinput.addEventListener("input", () => {
+    if (/^#[0-9A-Fa-f]{6}$/.test(hexinput.value)) {
+        updatecolor(hexinput.value);
+    }
+});
 
 drawhuestrip();
 drawsvsquare();
+updatecolor(currentcolor);
 
 let gridsize = 16;
 let pixels = [];
