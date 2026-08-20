@@ -144,7 +144,7 @@ function buildGrid(size) {
 }
 
 function paintCell(index) {
-    const color = colorpicker.value;
+    const color = currentcolor;
     pixels[index] = color;
 
     const cells = gridelement.children;
@@ -185,23 +185,29 @@ document.getElementById("clear").addEventListener("click", function(){
     copystatus.textContent ="";
 });
 
-function generateCSS(){
+function generateCSS() {
     const shadowparts = [];
 
-    for (let i = 0; i < pixels.length; i++){
+    for (let i = 0; i < pixels.length; i++) {
         const color = pixels[i];
 
-        if(color !== null){
+        if (color !== null) {
             const x = i % gridsize;
             const y = Math.floor(i / gridsize);
-            shadowparts.push(x+ "px" + y + "px 0" + color);
+            shadowparts.push(x + "px " + y + "px 0 " + color);
         }
     }
-    if (shadowparts.length === 0){
-        return "/* grid is empty, paint something first! */"
+
+    if (shadowparts.length === 0) {
+        return "/* grid is empty, paint something first! */";
     }
+
     let css = ".pixel-art {\n";
     css += "  width: 1px;\n  height: 1px;\n";
+    css += "  transform: scale(16);\n";
+    css += "  transform-origin: top left;\n";
+    css += "  margin: 40px;\n";
+    css += "  image-rendering: pixelated;\n";
     css += "  box-shadow:\n    " + shadowparts.join(",\n    ") + ";\n";
     css += "}";
 
@@ -210,6 +216,12 @@ function generateCSS(){
 
 document.getElementById("generate").addEventListener("click", function(){
     outputbox.value = generateCSS();
+    copystatus.textContent = "";
+
+    htmlbox.value = "<div class=\"pixel-art\"></div>";
+    testcss.value = css;
+
+    renderTestPreview();
     copystatus.textContent = "";
 });
 
@@ -232,3 +244,17 @@ selectsize.addEventListener("change", function() {
 });
 
 buildGrid(gridsize);
+
+const htmlbox = document.getElementById("htmlbox");
+const testcss = document.getElementById("testcss");
+const testframe = document.getElementById("testframe");
+
+function renderTestPreview() {
+    const doc = testframe.contentDocument;
+    doc.open();
+    doc.write("<html><head><style>" + testcss.value + "</style></head><body>" + htmlbox.value + "</body></html>");
+    doc.close();
+}
+
+htmlbox.addEventListener("input", renderTestPreview);
+testcss.addEventListener("input", renderTestPreview);

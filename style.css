@@ -255,6 +255,60 @@ button:active {
     font-family: monospace;
 }
 
+.testsection {
+    margin: 40px 60px 60px;
+    display: flex;
+    gap: 20px;
+}
+
+.testinputs {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.testbox, .testpreviewbox {
+    background-color: #3f0d28;
+    border: 4px solid #64123f;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.testbox span, .testpreviewbox span {
+    color: #fca1f9;
+    font-family: cursive;
+    font-size: 1.2rem;
+    display: block;
+    margin-bottom: 15px;
+}
+
+#htmlbox, #testcss {
+    box-sizing: border-box;
+    width: 100%;
+    height: 160px;
+    resize: vertical;
+    padding: 12px;
+    border: 3px solid #3f0d28;
+    background-color: #64123f;
+    color: #fca1f9;
+    font-family: monospace;
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.testpreviewbox {
+    flex: 1;
+}
+
+#testframe {
+    width: 100%;
+    height: 340px;
+    border: none;
+    background-color: #fff;
+}
+
+
 @media (max-width: 700px) {
     .columns {
         margin: 0 15px;
