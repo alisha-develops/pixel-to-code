@@ -1,3 +1,65 @@
+const svcanvas = document.getElementById("svcanvas");
+const svctx = svcanvas.getContext("2d");
+const huecanvas = document.getElementById("huecanvas");
+const huectx = huecanvas.getContext("2d");
+const currentcolorbox = document.getElementById("currentcolor");
+const hexinput = document.getElementById("hexinput");
+
+let currenthue = 320;
+let currentcolor = "#fca1f9";
+let issvdragging = false;
+let ishuedragging = false;
+
+function hsv2hex(h, s, v) {
+    const c = v * s;
+    const x = c * (1 - Math.abs((h/60) % 2 - 1));
+    const m = v - c;
+
+    let [r, g, b] =
+    h < 60 ? [c, x, 0] :
+    h < 120 ? [x, c, 0] :
+        h < 180 ? [0, c, x] :
+        h < 240 ? [0, x, c] :
+        h < 300 ? [x, 0, c] :
+        [c, 0, x];
+
+    return '#' + [r, g, b]
+        .map(n => Math.round((n + m) * 255).toString(16).padStart(2, "0"))
+        .join("");map
+}
+
+function drawhuestrip() {
+    const gradient = huectx.createLinearGradient(0, 0, huecanvas.clientWidth, 0);
+
+    for (let h = 0; h <= 360; h +=60) {
+        gradient.addColorStop(h / 360, hsv2hex(h, 1, 1));
+    }
+
+    huectx.fillStyle = gradient;
+    huectx.fillRect(0, 0, huecanvas.clientWidth, huecanvas.height);
+}
+
+function drawsvsquare() {
+    svctx.fillStyle = hsv2hex(currenthue,1, 1);
+    svctx.fillRect(0, 0,  svcanvas.clientWidth, svcanvas.height);
+
+    const white = svctx.createLinearGradient(0,0, svcanvas.clientWidth, 0);
+    white.addColorStop(0, "#fff");
+    white.addColorStop(1, "transparent");
+    svctx.fillStyle = white;
+    svctx.fillRect(0,0, svcanvas.clientWidth, svcanvas.height);
+
+    const black = svctx.createLinearGradient(0,0, 0, svcanvas.height);
+    black.addColorStop(0, "transparent");
+    black.addColorStop(1, "#000");
+    svctx.fillStyle = black;
+    svctx.fillRect(0,0, svcanvas.clientWidth, svcanvas.height);
+}
+
+
+drawhuestrip();
+drawsvsquare();
+
 let gridsize = 16;
 let pixels = [];
 const gridelement = document.getElementById("grid");

@@ -19,7 +19,13 @@
                 <option value="32">32 x 32</option>
             </select>
             <span class="toolbutton">color</span>
-            <input type="color" id="colorpicker" value="#fca1f9">
+            <canvas id="svcanvas" width="140" height="140"></canvas>
+            <canvas id="huecanvas" width="140" height="16"></canvas>
+
+            <div class="colorrow">
+                <div id="currentcolor"></div>
+                <input type="text" id="hexinput" placeholder="#fca1f9" maxlength="7">
+            </div>
             <button id="clear">clear</button>
             <button id="generate">generate</button>
         </div>

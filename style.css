@@ -225,6 +225,36 @@ button:active {
     color: #fca1f9;
 }
 
+#svcanvas, #huecanvas {
+    display: block;
+    margin: 10px 0;
+    cursor: crosshair;
+    border: 2px solid #64123f;
+}
+
+.colorrow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+#currentcolor {
+    width: 28px;
+    height: 28px;
+    border: 2px solid #fca1f9;
+    flex-shrink: 0;
+}
+
+#hexinput {
+    width: 90px;
+    padding: 4px 6px;
+    border: 2px solid #64123f;
+    background: #3f0d28;
+    color: #fca1f9;
+    font-family: monospace;
+}
+
 @media (max-width: 700px) {
     .columns {
         margin: 0 15px;
