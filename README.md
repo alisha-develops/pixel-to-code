@@ -1,6 +1,6 @@
 # art into code
 
-this is a little browser-based pixel art editor i built to experiment with turning visual art into code. the idea is pretty simple: you draw pixel art on a grid, choose your colors, and the tool turns what you drew into actual CSS. you can then take that generated HTML/CSS and test it immediately inside the same website.
+this is a little browser based pixel art editor i built to experiment with turning visual art into code. the idea is pretty simple: you draw pixel art on a grid, choose your colors, and the tool turns what you drew into actual CSS. you can then take that generated HTML/CSS and test it immediately inside the same website.
 
 > **draw it → turn it into code → test it**
 
@@ -17,11 +17,22 @@ this is a little browser-based pixel art editor i built to experiment with turni
   </tr>
 </table>
 
-there's a pixel grid where you can paint, one of the things i really wanted was a custom color picker. i didn't want to just use the generic browser `<input type="color">`:<input type="color"> option. so i made the whole thing myself using canvas and HSV, the hue strip, the saturation/value square, and the HSV → HEX conversion are all custom (took some help with chatgpt in fixing this part though). then it also has a CSS output box, and a little testing area underneath.
+there's a pixel grid where you can paint, one of the things i really wanted was a custom color picker. i didn't want to just use the generic browser `<input type="color">` option. so i made the whole thing myself using canvas and HSV, the hue strip, the saturation/value square, and the HSV → HEX conversion are all custom (took some help with chatgpt in fixing this part though). then it also has a CSS output box, and a little testing area underneath.
 
 you can choose between 8×8, 16×16 and 32×32 grids, drag across the grid to paint, clear everything, generate the CSS, and copy it.
 
-the generated artwork uses `box-shadow` to turn a 1×1 element into a pixel-art image.
+the generated artwork uses `box-shadow` to turn a 1×1 element into a pixel-art image. i could've just exported the drawing as an image instead, but that felt kind of boring - i wanted the actual output to be code, something you could take and drop straight into a website instead of downloading a picture. a pixel drawing ends up looking like this:
+
+```css
+.pixel-art {
+    width: 1px;
+    height: 1px;
+    box-shadow:
+        0px 0px 0 #fca1f9,
+        1px 0px 0 #64123f,
+        2px 0px 0 #fca1f9;
+}
+```
 
 ## everything here is custom (i love itt)
 
@@ -36,33 +47,14 @@ the HTML/CSS testing area is custom too. i mean just see the difference:
     </td>
     <td align="center" width="50%" valign="top">
       <p><b>after:</b></p>
-      <img src="https://cdn.hackclub.com/01a02069-d412-7612-80bb-4db699d9d84f/after%20pinkish%20theme.png" width="100%">
+      <img src="https://cdn.hackclub.com/01a0207a-a170-71b0-b2fb-99b058511708/editor%20works!.png" width="100%">
     </td>
   </tr>
 </table>
 
-## why CSS?
+also you see that you can actually use html and css editors for real, in the above picture i have written a completey different code and it appears to be my personal site! isnt that cool? and the pixel art was renderingat the very bottom, almost invisible so i used css properties to bring it up.
 
-i could have just exported the drawing as an image, but that felt a little boring.
-
-i wanted the output itself to be code.
-
-a pixel drawing becomes something like:
-
-```css
-.pixel-art {
-    width: 1px;
-    height: 1px;
-    box-shadow:
-        0px 0px 0 #fca1f9,
-        1px 0px 0 #64123f,
-        2px 0px 0 #fca1f9;
-}
-```
-
-so instead of downloading an image, you get something you can actually put into a website.
-
-## where this is going
+## what's next
 
 right now this is intentionally pretty basic.
 
